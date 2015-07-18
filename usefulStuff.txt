@@ -1,0 +1,82 @@
+##### How to measure function execution speed:
+python -m timeit -s "l = [1, 2, 3]" "list(reversed(l))"
+python -m timeit -s "l = [1, 2, 3]" "for i in l[::-1]" # 2-3x faster!
+
+##### zip - возврат пар элементов из соотв массивов, пока один из них не кончится
+for hero, color in zip(heroes, colors):
+    print hero, 'is', color
+
+##### формирование словарей из массивов
+heroes_with_colors = dict(zip(heros, colors))
+
+##### yield - функция генератора, можно сделать функция,
+##### которая будет выдавать по строке из файла
+def iterate_lines(f):
+    for line in f:
+        line = line.strip(' \n')
+        if not line:
+            continue
+        if line.startswith('#'):
+            continue
+        yield line
+
+##### в файле используем вот так:
+# f = open('config.txt')
+# try:
+    # for line in iterate_lines(f):
+        # do_some_stuff(line)
+# finally:
+    # f.close()
+
+##### контекстный менеджер
+with open('config.txt') as f:
+    process_file(f)
+
+from contextlib import contextmanager
+
+@contextmanager
+def ignoreErrors(*errors):
+    try:
+        yield
+    except errors:
+        pass
+
+with ignoreErrors(KeyError, AttributeError):
+    raise KeyError
+
+#  V
+#  V
+#  V
+#  V
+with open('config.txt') as f:
+    for line in iterate_lines(f):
+        do_some_stuff(line)
+
+# =================================================
+# LIST functions
+
+list.append(x) - adds x-item to the end of the list
+list.insert(index, x) - adds x-item at index position
+list.remove(x) - remove x-item from the list
+list.pop() - remove last item from the list
+list.pop(index) - remove the index position from the list
+list.clear() - remove all items from the list
+list.index(x) - find the index position of x-item in the list
+list.count(x) - how many x-items are in the list
+list.sort() - sort all elements in the list
+list.reverse() - reverse elements in the list
+del list[index] - delete item from the list at the index position
+# =================================================
+# Stacks & Queues
+# Stack - LIFO (last in, first out)
+# Queue - FIFO (first in, first out)
+# # For queue - use collections.deque
+list = [1, 2, 3, 4, 5, 6]
+list.append(7) # [1, 2, 3, 4, 5, 6, 7]
+list.pop() # [1, 2, 3, 4, 5, 6]
+list.pop() # [1, 2, 3, 4, 5] - Stack
+list.pop(0) # [2, 3, 4, 5]   - Queue
+# =================================================
+# Запуск сценария питона без его импортирования как модуля
+# Также отпадает необходимость перезагружать его после изменений
+exec(open(‘module.py’).read())
