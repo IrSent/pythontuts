@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-#
-import sys
-sys.setrecursionlimit(10000)
+# import sys
+# sys.setrecursionlimit(10000)
 
 def recursiveBinarySearch(array, number, low_index, high_index):
 	if high_index < low_index:
