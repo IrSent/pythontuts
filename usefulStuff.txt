@@ -80,3 +80,10 @@ list.pop(0) # [2, 3, 4, 5]   - Queue
 # Запуск сценария питона без его импортирования как модуля
 # Также отпадает необходимость перезагружать сценарий при изменении
 exec(open(‘module.py’).read())
+
+# =================================================
+def ticket_link(issue):
+    if type(issue) != str: return None
+    if issue.startswith('A'): link = "https://attendify.atlassian.net/browse/%s" %issue
+    else: link = "https://kitapps.sifterapp.com/issues/%s" %issue
+    return '<a target="_blank" href="%s">%s</a>'%(link, issue)
